@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Itv</string>
+    <string name="search_hint">Поиск по названию фильма</string>
+
+
+    <!--demo fields todo remove this before release-->
+    <string name="demo_text">Отставной детектив Рик Декард вновь восстановлен в полиции Лос-Анджелеса для поиска возглавляемой Роем Батти группы киборгов, совершившей побег из космической колонии на Землю.</string>
+    <string name="demo_title">Бегущий по лезвию 2049</string>
+    <!--end demo fields-->
+
 </resources>
