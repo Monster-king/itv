@@ -32,6 +32,20 @@ dependencies {
     implementation libraries.supportDesign
     implementation libraries.cardView
 
+    // dagger
+    implementation libraries.dagger
+    implementation libraries.androidDagger
+    annotationProcessor libraries.daggerProcessor
+    annotationProcessor libraries.daggerCompiler
+    kapt libraries.daggerCompiler
+    kapt libraries.daggerProcessor
+
+    // network
+    implementation libraries.retrofit
+    implementation libraries.retrofitGson
+    implementation libraries.okhttp
+    implementation libraries.okhttpLogging // for debug
+
     // test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

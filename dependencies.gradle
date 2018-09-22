@@ -9,7 +9,7 @@ ext.versions = [
         androidGradlePlugin : '3.1.4',
         kotlin              : '1.2.70',
 
-        dagger              : '2.14.1',
+        dagger              : '2.17',
 
         rxJava2             : '2.2.1',
         rxAndroid           : '2.0.2',
@@ -50,6 +50,8 @@ ext.libraries = [
         kotlinStd           : "$groups.kotlin:kotlin-stdlib:$versions.kotlin",
 
         dagger              : "$groups.dagger:dagger:$versions.dagger",
+        androidDagger       : "$groups.dagger:dagger-android:$versions.dagger",
+        daggerProcessor     : "$groups.dagger:dagger-android-processor:$versions.dagger",
         daggerCompiler      : "$groups.dagger:dagger-compiler:$versions.dagger",
 
         rxJava2             : "$groups.rxJava2:rxjava:$versions.rxJava2",
