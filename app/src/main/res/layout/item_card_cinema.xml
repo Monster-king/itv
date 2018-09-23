@@ -18,7 +18,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/poster_image"
             android:layout_width="120dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -28,7 +28,7 @@
             app:srcCompat="@drawable/demo_image" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/title_tv"
             style="@style/TitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -38,11 +38,11 @@
             android:maxLines="2"
             android:text="@string/demo_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/poster_image"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/date_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
@@ -50,15 +50,15 @@
             android:drawableStart="@drawable/ic_calendar"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="1 января 2017"
+            android:text="@string/demo_date"
             android:textColor="@color/black__54"
             android:textSize="14sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView" />
+            app:layout_constraintStart_toEndOf="@+id/poster_image" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/favourite_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
@@ -69,24 +69,24 @@
             app:srcCompat="@drawable/favourite_state" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/overview_tv"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif"
             android:ellipsize="end"
+            android:fontFamily="sans-serif"
             android:lineSpacingExtra="6sp"
             android:text="@string/demo_text"
             android:textColor="@color/black__54"
             android:textSize="14sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintBottom_toTopOf="@+id/date_tv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintStart_toEndOf="@+id/poster_image"
+            app:layout_constraintTop_toBottomOf="@+id/title_tv" />
 
 
     </android.support.constraint.ConstraintLayout>

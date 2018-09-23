@@ -1,9 +1,10 @@
-package ru.surfstudio.itv
+package ru.surfstudio.itv.ui.main
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import dagger.android.support.DaggerAppCompatActivity
+import ru.surfstudio.itv.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

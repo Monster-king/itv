@@ -1,7 +1,7 @@
 ext.versions = [
         code                : 1,
         name                : '1.0',
-        minSdk              : 16,
+        minSdk              : 21,
         targetSdk           : 27,
         compileSdk          : 27,
 
@@ -11,8 +11,8 @@ ext.versions = [
 
         dagger              : '2.17',
 
-        rxJava2             : '2.2.1',
-        rxAndroid           : '2.0.2',
+        rxJava2             : '2.2.2',
+        rxAndroid           : '2.1.0',
         rxBinding           : '2.1.1',
 
         supportLibs         : '27.1.1',
@@ -53,6 +53,7 @@ ext.libraries = [
         androidDagger       : "$groups.dagger:dagger-android:$versions.dagger",
         daggerProcessor     : "$groups.dagger:dagger-android-processor:$versions.dagger",
         daggerCompiler      : "$groups.dagger:dagger-compiler:$versions.dagger",
+        daggerSupport       : "$groups.dagger:dagger-android-support:$versions.dagger",
 
         rxJava2             : "$groups.rxJava2:rxjava:$versions.rxJava2",
         rxAndroid           : "$groups.rxJava2:rxandroid:$versions.rxAndroid",

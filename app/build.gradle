@@ -1,17 +1,17 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion versions.compileSdk
     defaultConfig {
         applicationId "ru.surfstudio.itv"
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.code
+        versionName versions.name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -34,7 +34,7 @@ dependencies {
 
     // dagger
     implementation libraries.dagger
-    implementation libraries.androidDagger
+    implementation libraries.daggerSupport
     annotationProcessor libraries.daggerProcessor
     annotationProcessor libraries.daggerCompiler
     kapt libraries.daggerCompiler
@@ -45,6 +45,16 @@ dependencies {
     implementation libraries.retrofitGson
     implementation libraries.okhttp
     implementation libraries.okhttpLogging // for debug
+
+    // glide
+    implementation libraries.glide
+
+    // rxJava 2
+    implementation libraries.rxJava2
+    implementation libraries.rxAndroid
+
+    // arch components
+    implementation libraries.paging
 
     // test
     testImplementation 'junit:junit:4.12'
