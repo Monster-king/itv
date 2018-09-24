@@ -14,13 +14,13 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
         <ImageView
             android:id="@+id/poster_image"
             android:layout_width="120dp"
-            android:layout_height="match_parent"
+            android:layout_height="190dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,10 +36,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:maxLines="2"
-            android:text="@string/demo_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/poster_image"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/demo_title" />
 
         <TextView
             android:id="@+id/date_tv"
@@ -50,12 +50,12 @@
             android:drawableStart="@drawable/ic_calendar"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="@string/demo_date"
             android:textColor="@color/black__54"
             android:textSize="14sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/poster_image" />
+            app:layout_constraintStart_toEndOf="@+id/poster_image"
+            tools:text="@string/demo_date" />
 
         <ImageButton
             android:id="@+id/favourite_btn"
@@ -79,14 +79,15 @@
             android:ellipsize="end"
             android:fontFamily="sans-serif"
             android:lineSpacingExtra="6sp"
-            android:text="@string/demo_text"
+            android:maxLines="3"
             android:textColor="@color/black__54"
             android:textSize="14sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toTopOf="@+id/date_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/poster_image"
-            app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/title_tv"
+            tools:text="@string/demo_text" />
 
 
     </android.support.constraint.ConstraintLayout>

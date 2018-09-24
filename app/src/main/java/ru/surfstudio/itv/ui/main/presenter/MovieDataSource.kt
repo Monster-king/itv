@@ -1,6 +1,7 @@
 package ru.surfstudio.itv.ui.main.presenter
 
 import android.arch.paging.PageKeyedDataSource
+import android.util.Log
 import io.reactivex.subjects.BehaviorSubject
 import ru.surfstudio.itv.model.Movie
 import ru.surfstudio.itv.network.Failed
@@ -33,6 +34,8 @@ class MovieDataSource(
     }
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
+        Log.i("loadingPage", "initial")
+
         initialLoading.onNext(Loading)
         networkState.onNext(Loading)
         val result = repository.getMovies(1)
@@ -68,16 +71,15 @@ class MovieDataSource(
     }
 
     private fun load(page: Int, nextPage: Int, callback: LoadCallback<Int, Movie>) {
+        Log.i("loadingPage", "$page")
         networkState.onNext(Loading)
         val result = repository.getMovies(page)
         when (result) {
             is Success -> {
-                initialLoading.onNext(Loaded)
                 networkState.onNext(Loaded)
                 callback.onResult(result.movies, nextPage)
             }
             is Error -> {
-                networkState.onNext(Failed(result.message))
                 networkState.onNext(Failed(result.message))
                 retry = {
                     load(page, nextPage, callback)

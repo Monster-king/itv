@@ -39,7 +39,8 @@ ext.groups = [
         rxJava2             : "io.reactivex.rxjava2",
         arch                : "android.arch",
         glide               : "com.github.bumptech.glide",
-        exoplayer           : "com.google.android.exoplayer"
+        exoplayer           : "com.google.android.exoplayer",
+        rxBinding           : "com.jakewharton.rxbinding2"
 ]
 
 ext.gradlePlugins = [
@@ -57,7 +58,8 @@ ext.libraries = [
 
         rxJava2             : "$groups.rxJava2:rxjava:$versions.rxJava2",
         rxAndroid           : "$groups.rxJava2:rxandroid:$versions.rxAndroid",
-        rxBinding           : "com.jakewharton.rxbinding2:rxbinding:$versions.rxBinding",
+        rxBinding           : "$groups.rxBinding:rxbinding:$versions.rxBinding",
+        rxBindingSupport    : "$groups.rxBinding:rxbinding-support-v4:$versions.rxBinding",
 
         retrofit            : "$groups.retrofit2:retrofit:$versions.retrofit",
         retrofitGson        : "$groups.retrofit2:converter-gson:$versions.retrofit",

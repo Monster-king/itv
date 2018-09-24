@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import ru.surfstudio.itv.utils.Constants
 import javax.inject.Singleton
 
 @Module
@@ -12,7 +13,7 @@ class NetworkModule {
     @Singleton
     @Provides
     fun okhtppLoggingInterceptor() = HttpLoggingInterceptor()
-            .setLevel(HttpLoggingInterceptor.Level.BODY)
+            .setLevel(HttpLoggingInterceptor.Level.BODY)!!
 
     @Singleton
     @Provides
@@ -22,6 +23,8 @@ class NetworkModule {
                 val originalHttpUrl = original.url()
 
                 val url = originalHttpUrl.newBuilder()
+                        .addQueryParameter("api_key", Constants.API_KEY)
+                        .addQueryParameter("language", Constants.LANGUAGE)
                         .build()
                 val requestBuilder = original.newBuilder()
                         .url(url)
@@ -29,5 +32,5 @@ class NetworkModule {
                 it.proceed(request)
             }
             .addInterceptor(loggingInterceptor)
-            .build()
+            .build()!!
 }

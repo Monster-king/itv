@@ -52,6 +52,8 @@ dependencies {
     // rxJava 2
     implementation libraries.rxJava2
     implementation libraries.rxAndroid
+    implementation libraries.rxBinding
+    implementation libraries.rxBindingSupport
 
     // arch components
     implementation libraries.paging

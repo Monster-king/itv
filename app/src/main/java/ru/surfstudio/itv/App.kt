@@ -2,7 +2,7 @@ package ru.surfstudio.itv
 
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import ru.surfstudio.itv.di.modules.DaggerAppComponent
+import ru.surfstudio.itv.di.DaggerAppComponent
 
 
 class App : DaggerApplication() {

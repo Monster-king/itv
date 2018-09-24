@@ -4,21 +4,29 @@ import retrofit2.Response
 import ru.surfstudio.itv.model.Movie
 import ru.surfstudio.itv.network.*
 import ru.surfstudio.itv.network.pojo.BaseResponse
-import java.net.UnknownHostException
+import java.io.IOException
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MovieRepository @Inject constructor(private val service: MovieService) {
 
-    private val movies: MutableMap<Int, List<Movie>> = HashMap()
+    private val movies: ConcurrentHashMap<Int, List<Movie>> = ConcurrentHashMap()
     private var searchKey = "" // last searched query
     private val searchedMovies: MutableMap<Int, List<Movie>> = HashMap()
 
-    fun getMovies(page: Int = 1): MovieRepoResult {
+    @Synchronized fun refresh() {
+        movies.clear()
+        searchedMovies.clear()
+    }
+
+    @Synchronized fun getMovies(page: Int = 1): MovieRepoResult {
         if (page !in movies) {
             val result: Response<BaseResponse<Movie>>
             try {
                 result = service.discoverMovies(page).execute()
-            } catch (e: UnknownHostException) {
+            } catch (e: IOException ) {
                 return NoInternet
             }
             if (result.isSuccessful) {
@@ -30,7 +38,7 @@ class MovieRepository @Inject constructor(private val service: MovieService) {
         return Success(movies[page] ?: emptyList())
     }
 
-    fun searchMovies(query: String, page: Int = 1): MovieRepoResult {
+    @Synchronized fun searchMovies(query: String, page: Int = 1): MovieRepoResult {
         if (query != searchKey) {
             searchedMovies.clear()
         }
@@ -38,7 +46,7 @@ class MovieRepository @Inject constructor(private val service: MovieService) {
             val result: Response<BaseResponse<Movie>>
             try {
                 result = service.searchMovies(query, page).execute()
-            } catch (e: UnknownHostException) {
+            } catch (e: IOException) {
                 return NoInternet
             }
             if (result.isSuccessful) {

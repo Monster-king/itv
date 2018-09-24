@@ -18,7 +18,7 @@ object ViewHolderFactory {
                 MovieViewHolder(layoutInflater.inflate(R.layout.item_card_cinema, parent, false))
             }
             NETWORK_STATE -> {
-                NetworkStateViewHolder(layoutInflater.inflate(R.layout.item_card_cinema, parent, false))
+                NetworkStateViewHolder(layoutInflater.inflate(R.layout.item_network_state, parent, false))
             }
             else -> {
                 throw IllegalArgumentException("Unknown view type: $type")
