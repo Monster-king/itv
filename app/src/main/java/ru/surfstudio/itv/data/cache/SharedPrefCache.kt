@@ -10,7 +10,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 import com.google.gson.reflect.TypeToken
 
-
+// todo in real project prefer to use database to caching data
 @Singleton
 class SharedPrefCache @Inject constructor(
         @param:Named(Constants.APP_CONTEXT) private val context: Context

@@ -12,18 +12,15 @@ import javax.inject.Singleton
 
 /**
  * todo чтобы поддерживать поворот экрана (не потерять позицию скролла) мы должны использовать
- * PositionalDataSource и соответственно изм
+ * PositionalDataSource и соответственно изменит MovieRepository
  */
 @Singleton
 class MovieRepository @Inject constructor(private val service: MovieService,
                                           private val cache: MovieCache) {
 
-    private val movies: ConcurrentHashMap<Int, List<Movie>> = ConcurrentHashMap()
+    private val movies: MutableMap<Int, List<Movie>> = HashMap()
     private var searchKey = "" // last searched query
     private val searchedMovies: MutableMap<Int, List<Movie>> = HashMap()
-
-    // todo we must save favourite movies in database!!!
-    private val favouriteSet: MutableSet<Int> = HashSet()
 
     @Synchronized
     fun refresh() {
@@ -33,7 +30,7 @@ class MovieRepository @Inject constructor(private val service: MovieService,
 
     @Synchronized
     fun getMovies(page: Int = 1): MovieRepoResult {
-        if (page !in movies) {
+        if (page !in movies.keys) {
             val result: Response<BaseResponse<Movie>>
             try {
                 result = service.discoverMovies(page).execute()
@@ -58,7 +55,7 @@ class MovieRepository @Inject constructor(private val service: MovieService,
             searchedMovies.clear()
             searchKey = query
         }
-        if (page !in searchedMovies) {
+        if (page !in searchedMovies.keys) {
             val result: Response<BaseResponse<Movie>>
             try {
                 result = service.searchMovies(query, page).execute()

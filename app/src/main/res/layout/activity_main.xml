@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ru.surfstudio.itv.ui.custom.ClearableEditText
+            android:id="@+id/search_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/search_background"

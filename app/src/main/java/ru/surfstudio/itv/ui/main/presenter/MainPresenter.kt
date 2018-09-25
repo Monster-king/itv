@@ -1,5 +1,6 @@
 package ru.surfstudio.itv.ui.main.presenter
 
+import android.os.Bundle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
 import ru.surfstudio.itv.data.cache.MovieCache
@@ -21,28 +22,26 @@ class MainPresenter @Inject constructor(private val view: MainView,
                                         private val initialLoad: BehaviorSubject<NetworkState>,
                                         @param:Named(Constants.NETWORK_STATE_NAME)
                                         private val networkState: BehaviorSubject<NetworkState>,
-                                        private val dataSourceSubject: BehaviorSubject<MovieDataSource>,
+                                        private val dataSourceSubject: BehaviorSubject<BaseMovieDataSource>,
                                         private val repository: MovieRepository,
-                                        private val cache: MovieCache
+                                        private val cache: MovieCache,
+                                        private val dataFactory: MovieDataFactory
 ) : BasePresenter() {
-    private lateinit var dataSource: MovieDataSource
-    private var notShowLoading = false
+    private lateinit var dataSource: BaseMovieDataSource
 
-    override fun onCreate() {
+    override fun onCreate(savedInstanceState: Bundle?) {
         compositeDisposable.addAll(
                 dataSourceSubject.subscribe {
                     dataSource = it
                 },
                 view.retryClicks.mergeWith(view.retryOnError).subscribe {
-                    dataSource.retryAllFailed()
+                    dataSource.retryLoad()
                 },
-                initialLoad.observeOn(AndroidSchedulers.mainThread()).filter {
-                    val res = !(it == Loading && notShowLoading)
-                    if (!res) notShowLoading = false
-                    return@filter res
-                }.subscribe {
+                initialLoad.observeOn(AndroidSchedulers.mainThread()).subscribe {
                     when (it) {
-                        Loading -> view.showInitialLoading()
+                        Loading -> {
+                            view.showLoading()
+                        }
                         is Failed -> view.showError()
                         Loaded -> view.showData()
                     }
@@ -52,16 +51,18 @@ class MainPresenter @Inject constructor(private val view: MainView,
                     if (it is Failed) view.showSnackBar()
                 },
                 view.swipeRefresh.subscribe {
-                    notShowLoading = true
                     repository.refresh()
                     dataSource.invalidate()
-                    view.showLoading()
                 },
                 view.favouriteClick.subscribe {
                     if (it.isFavourite)
                         cache.saveMovie(it)
                     else
                         cache.removeMovie(it)
+                },
+                view.searchTextChanges.subscribe {
+                    dataFactory.setSearchQuery(it)
+                    dataSource.invalidate()
                 }
         )
     }

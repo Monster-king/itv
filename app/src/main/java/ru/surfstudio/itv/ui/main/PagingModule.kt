@@ -14,11 +14,18 @@ import ru.surfstudio.itv.network.NetworkState
 import ru.surfstudio.itv.ui.adapters.MovieAdapter
 import ru.surfstudio.itv.ui.main.presenter.MovieDataFactory
 import ru.surfstudio.itv.utils.Constants
+import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import javax.inject.Named
 
 @Module
 class PagingModule {
+
+    @ActivityScope
+    @Provides
+    fun executor(): Executor {
+        return Executors.newFixedThreadPool(2)
+    }
 
     @ActivityScope
     @Provides

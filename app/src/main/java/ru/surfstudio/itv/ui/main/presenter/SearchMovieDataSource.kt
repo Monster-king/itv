@@ -1,6 +1,5 @@
 package ru.surfstudio.itv.ui.main.presenter
 
-import android.arch.paging.PageKeyedDataSource
 import android.util.Log
 import io.reactivex.subjects.BehaviorSubject
 import ru.surfstudio.itv.data.model.Movie
@@ -9,27 +8,25 @@ import ru.surfstudio.itv.network.Loaded
 import ru.surfstudio.itv.network.Loading
 import ru.surfstudio.itv.network.NetworkState
 import ru.surfstudio.itv.repositories.*
-import ru.surfstudio.itv.ui.base.BaseDataSource
 import java.util.concurrent.Executor
 
-class MovieDataSource(
+class SearchMovieDataSource(
         private val repository: MovieRepository,
         retryExecutor: Executor,
         private val initialLoading: BehaviorSubject<NetworkState>,
-        networkState: BehaviorSubject<NetworkState>
+        networkState: BehaviorSubject<NetworkState>,
+        private val searchQuery: String
 ) : BaseMovieDataSource(retryExecutor, networkState) {
 
     override fun getData(page: Int): MovieRepoResult {
-        return repository.getMovies(page)
+        return repository.searchMovies(searchQuery, page)
     }
-
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
         Log.i("loadingPage", "initial")
-
         initialLoading.onNext(Loading)
         networkState.onNext(Loading)
-        val result = repository.getMovies(1)
+        val result = repository.searchMovies(searchQuery)
         when (result) {
             is Success -> {
                 initialLoading.onNext(Loaded)

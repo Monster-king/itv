@@ -12,12 +12,11 @@ interface MainView : BaseViewInterface<View> {
     val retryOnError: Observable<Any>
     val swipeRefresh: Observable<Any>
     val favouriteClick: PublishSubject<Movie>
+    val searchTextChanges: Observable<String>
 
     fun setNetworkState(networkState: NetworkState)
 
     fun showData()
-
-    fun showInitialLoading()
 
     fun showError()
 
