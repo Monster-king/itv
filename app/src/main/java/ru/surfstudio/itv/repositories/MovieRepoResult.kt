@@ -1,6 +1,6 @@
 package ru.surfstudio.itv.repositories
 
-import ru.surfstudio.itv.model.Movie
+import ru.surfstudio.itv.data.model.Movie
 
 sealed class MovieRepoResult
 data class Success(val movies: List<Movie>) : MovieRepoResult()

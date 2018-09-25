@@ -3,7 +3,7 @@ package ru.surfstudio.itv.ui.main.presenter
 import android.arch.paging.PageKeyedDataSource
 import android.util.Log
 import io.reactivex.subjects.BehaviorSubject
-import ru.surfstudio.itv.model.Movie
+import ru.surfstudio.itv.data.model.Movie
 import ru.surfstudio.itv.network.Failed
 import ru.surfstudio.itv.network.Loaded
 import ru.surfstudio.itv.network.Loading

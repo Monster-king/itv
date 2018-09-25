@@ -9,12 +9,10 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.subjects.BehaviorSubject
 import ru.surfstudio.itv.di.scopes.ActivityScope
-import ru.surfstudio.itv.model.Movie
+import ru.surfstudio.itv.data.model.Movie
 import ru.surfstudio.itv.network.NetworkState
 import ru.surfstudio.itv.ui.adapters.MovieAdapter
-import ru.surfstudio.itv.ui.main.presenter.MainPresenter
 import ru.surfstudio.itv.ui.main.presenter.MovieDataFactory
-import ru.surfstudio.itv.ui.main.presenter.MovieDataSource
 import ru.surfstudio.itv.utils.Constants
 import java.util.concurrent.Executors
 import javax.inject.Named

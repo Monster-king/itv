@@ -1,4 +1,4 @@
-package ru.surfstudio.itv.model
+package ru.surfstudio.itv.data.model
 
 import com.google.gson.annotations.SerializedName
 import android.support.v7.util.DiffUtil
@@ -13,7 +13,7 @@ data class Movie(
         @SerializedName("release_date")
         val releaseDate: String,
         @Transient
-        val isFavourite: Boolean = false
+        var isFavourite: Boolean = false
 ) {
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {

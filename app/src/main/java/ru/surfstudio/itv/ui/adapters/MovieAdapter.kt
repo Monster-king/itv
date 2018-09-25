@@ -3,9 +3,8 @@ package ru.surfstudio.itv.ui.adapters
 import android.arch.paging.PagedListAdapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import ru.surfstudio.itv.model.Movie
+import ru.surfstudio.itv.data.model.Movie
 import ru.surfstudio.itv.network.Loaded
 import ru.surfstudio.itv.network.Loading
 import ru.surfstudio.itv.network.NetworkState
@@ -19,6 +18,8 @@ import ru.surfstudio.itv.ui.viewholders.ViewHolderFactory
 class MovieAdapter : PagedListAdapter<Movie, RecyclerView.ViewHolder>(Movie.DIFF_CALLBACK) {
 
     val retryClick: PublishSubject<Any> = PublishSubject.create()
+    val favouriteClick: PublishSubject<Movie> = PublishSubject.create()
+
     var networkState: NetworkState? = null
     set(value) {
         val previousState = field
@@ -52,6 +53,9 @@ class MovieAdapter : PagedListAdapter<Movie, RecyclerView.ViewHolder>(Movie.DIFF
         when(holder) {
             is MovieViewHolder -> {
                 holder.bindView(getItem(position)!!)
+                holder.favouriteClick.subscribe {
+                    favouriteClick.onNext(it)
+                }
             }
             is NetworkStateViewHolder -> {
                 holder.bindView(networkState ?: Loading)

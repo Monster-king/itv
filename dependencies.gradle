@@ -6,8 +6,8 @@ ext.versions = [
         compileSdk          : 27,
 
 
-        androidGradlePlugin : '3.1.4',
-        kotlin              : '1.2.70',
+        androidGradlePlugin : '3.2.0',
+        kotlin              : '1.2.71',
 
         dagger              : '2.17',
 

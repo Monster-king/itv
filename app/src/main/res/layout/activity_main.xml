@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+        <ru.surfstudio.itv.ui.custom.ClearableEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/search_background"
@@ -25,22 +25,36 @@
             android:drawableStart="@drawable/ic_search"
             android:fontFamily="sans-serif"
             android:hint="@string/search_hint"
+            android:drawableEnd="@drawable/ic_close"
             android:lineSpacingExtra="5sp"
             android:paddingBottom="10dp"
             android:paddingEnd="20dp"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
-            android:textColor="@color/black__38"
+            android:textColor="@color/black_87"
+            android:textColorHint="@color/black__38"
             android:textSize="15sp"
             android:textStyle="normal" />
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:max="100"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_container"
+        tools:progress="80" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_container">
 
@@ -52,7 +66,7 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/initial_progress"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,6 +85,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_container" />
-
 
 </android.support.constraint.ConstraintLayout>

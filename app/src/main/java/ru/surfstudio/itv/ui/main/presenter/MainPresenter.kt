@@ -2,6 +2,7 @@ package ru.surfstudio.itv.ui.main.presenter
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
+import ru.surfstudio.itv.data.cache.MovieCache
 import ru.surfstudio.itv.di.scopes.ActivityScope
 import ru.surfstudio.itv.network.Failed
 import ru.surfstudio.itv.network.Loaded
@@ -21,7 +22,8 @@ class MainPresenter @Inject constructor(private val view: MainView,
                                         @param:Named(Constants.NETWORK_STATE_NAME)
                                         private val networkState: BehaviorSubject<NetworkState>,
                                         private val dataSourceSubject: BehaviorSubject<MovieDataSource>,
-                                        private val repository: MovieRepository
+                                        private val repository: MovieRepository,
+                                        private val cache: MovieCache
 ) : BasePresenter() {
     private lateinit var dataSource: MovieDataSource
     private var notShowLoading = false
@@ -52,6 +54,13 @@ class MainPresenter @Inject constructor(private val view: MainView,
                     notShowLoading = true
                     repository.refresh()
                     dataSource.invalidate()
+                    view.showLoading()
+                },
+                view.favouriteClick.subscribe {
+                    if (it.isFavourite)
+                        cache.saveMovie(it)
+                    else
+                        cache.removeMovie(it)
                 }
         )
     }

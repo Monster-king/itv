@@ -2,9 +2,8 @@ package ru.surfstudio.itv.network
 
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.surfstudio.itv.model.Movie
+import ru.surfstudio.itv.data.model.Movie
 import ru.surfstudio.itv.network.pojo.BaseResponse
 
 interface MovieService {

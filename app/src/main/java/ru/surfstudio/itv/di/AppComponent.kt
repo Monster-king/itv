@@ -10,6 +10,7 @@ import ru.surfstudio.itv.App
 import ru.surfstudio.itv.di.modules.ActivityBuilder
 import ru.surfstudio.itv.di.modules.ApiServiceModule
 import ru.surfstudio.itv.di.modules.AppModule
+import ru.surfstudio.itv.di.modules.CacheModule
 import javax.inject.Singleton
 
 @Singleton
@@ -17,7 +18,8 @@ import javax.inject.Singleton
     AndroidSupportInjectionModule::class,
     AppModule::class,
     ActivityBuilder::class,
-    ApiServiceModule::class
+    ApiServiceModule::class,
+    CacheModule::class
 ])
 interface AppComponent : AndroidInjector<DaggerApplication> {
 

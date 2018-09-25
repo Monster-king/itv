@@ -8,7 +8,6 @@ import kotlinx.android.synthetic.main.item_network_state.view.*
 import ru.surfstudio.itv.network.Failed
 import ru.surfstudio.itv.network.Loading
 import ru.surfstudio.itv.network.NetworkState
-import java.lang.IllegalArgumentException
 
 class NetworkStateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -31,7 +30,7 @@ class NetworkStateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private fun updateViews(progress: Int, retry: Int) {
         with(itemView) {
-            progress_bar.visibility = progress
+            initial_progress.visibility = progress
             retry_btn.visibility = retry
         }
     }
