@@ -2,9 +2,12 @@ package ru.surfstudio.itv.ui.main
 
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import android.view.animation.LinearInterpolator
+import android.widget.Toast
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.Observable
@@ -41,7 +44,7 @@ class MainViewImpl @Inject constructor(context: Context,
 
         swipeRefresh = RxSwipeRefreshLayout.refreshes(swipe_refresh)
         movies_rv.adapter = adapter
-        movies_rv.layoutManager = GridLayoutManager(context, 1) // todo get from dimens
+        movies_rv.layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.span_count)) // todo get from dimens
     }
 
 
@@ -59,6 +62,10 @@ class MainViewImpl @Inject constructor(context: Context,
 
     override fun showError() {
         updateViews(GONE, GONE, VISIBLE)
+    }
+
+    override fun showSnackBar() {
+        Snackbar.make(this, resources.getText(R.string.error_text), Snackbar.LENGTH_SHORT).show()
     }
 
     override fun showLoading() {

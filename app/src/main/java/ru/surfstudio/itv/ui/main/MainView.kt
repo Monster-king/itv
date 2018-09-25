@@ -21,5 +21,7 @@ interface MainView : BaseViewInterface<View> {
 
     fun showError()
 
+    fun showSnackBar()
+
     fun showLoading()
 }

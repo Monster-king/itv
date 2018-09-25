@@ -49,6 +49,7 @@ class MainPresenter @Inject constructor(private val view: MainView,
                 },
                 networkState.observeOn(AndroidSchedulers.mainThread()).subscribe {
                     view.setNetworkState(it)
+                    if (it is Failed) view.showSnackBar()
                 },
                 view.swipeRefresh.subscribe {
                     notShowLoading = true
