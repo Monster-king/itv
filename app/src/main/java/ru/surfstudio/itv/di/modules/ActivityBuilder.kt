@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import ru.surfstudio.itv.di.scopes.ActivityScope
 import ru.surfstudio.itv.ui.main.MainActivity
-import ru.surfstudio.itv.ui.main.MainActivityModule
-import ru.surfstudio.itv.ui.main.PagingModule
+import ru.surfstudio.itv.ui.main.modules.MainActivityModule
+import ru.surfstudio.itv.ui.main.modules.PagingModule
 
 @Module
 abstract class ActivityBuilder {

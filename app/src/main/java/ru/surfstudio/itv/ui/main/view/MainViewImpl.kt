@@ -1,4 +1,4 @@
-package ru.surfstudio.itv.ui.main
+package ru.surfstudio.itv.ui.main.view
 
 import android.animation.ObjectAnimator
 import android.arch.lifecycle.LifecycleOwner

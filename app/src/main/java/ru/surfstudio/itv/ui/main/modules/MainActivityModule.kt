@@ -1,4 +1,4 @@
-package ru.surfstudio.itv.ui.main
+package ru.surfstudio.itv.ui.main.modules
 
 import android.arch.lifecycle.LifecycleOwner
 import android.content.Context
@@ -6,10 +6,12 @@ import android.view.View
 import dagger.Binds
 import dagger.Module
 import ru.surfstudio.itv.di.scopes.ActivityScope
-import ru.surfstudio.itv.ui.adapters.MovieAdapter
 import ru.surfstudio.itv.ui.base.BasePresenter
 import ru.surfstudio.itv.ui.base.BaseViewInterface
+import ru.surfstudio.itv.ui.main.MainActivity
 import ru.surfstudio.itv.ui.main.presenter.MainPresenter
+import ru.surfstudio.itv.ui.main.view.MainView
+import ru.surfstudio.itv.ui.main.view.MainViewImpl
 
 
 @Module

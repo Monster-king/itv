@@ -12,7 +12,7 @@ import ru.surfstudio.itv.di.scopes.ActivityScope
 import ru.surfstudio.itv.network.*
 import ru.surfstudio.itv.repositories.MovieRepository
 import ru.surfstudio.itv.ui.base.BasePresenter
-import ru.surfstudio.itv.ui.main.MainView
+import ru.surfstudio.itv.ui.main.view.MainView
 import ru.surfstudio.itv.utils.Constants
 import java.util.concurrent.Executors
 import javax.inject.Inject

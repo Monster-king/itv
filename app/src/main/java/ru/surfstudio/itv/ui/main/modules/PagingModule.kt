@@ -1,4 +1,4 @@
-package ru.surfstudio.itv.ui.main
+package ru.surfstudio.itv.ui.main.modules
 
 
 import dagger.Module
