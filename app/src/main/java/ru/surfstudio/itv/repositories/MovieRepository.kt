@@ -32,7 +32,7 @@ class MovieRepository @Inject constructor(private val service: MovieService,
     @Synchronized
     fun getMovies(startPosition: Int, loadSize: Int, searchQuery: String): MovieRepoResult {
         val start: Int
-        if (searchQuery != this.searchQuery) {
+        if (searchQuery != this.searchQuery || movies.isEmpty()) {
             searchedMovies.clear()
             this.searchQuery = searchQuery
             start = 0
