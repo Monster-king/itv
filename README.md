@@ -35,5 +35,6 @@ Future plans:
 - [ ] Store favourite movies to database
 - [ ] Favourite movies screen
 - [ ] Language settings
+- [ ] Fix bugs :)
 
 **Feel free to contribute**
