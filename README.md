@@ -2,7 +2,7 @@
 Demo application using api https://developers.themoviedb.org
 
 
-###Screenshots:
+**Screenshots:**
 
 <div float="left">
 <kbd>
@@ -14,9 +14,10 @@ Demo application using api https://developers.themoviedb.org
 <img alt="screen land" src="https://raw.githubusercontent.com/Monster-king/itv/master/screenshots/screen_land.png" width="400">
 </kbd>
 </div>
+<br> <br> <br>
 
+**Used libraries:**
 
-###Used libraries:
 - [RxJava2](https://github.com/ReactiveX/RxJava)
 - [PagingLibrary](https://developer.android.com/topic/libraries/architecture/paging/)
 - [Retrofit2](https://github.com/square/retrofit)
