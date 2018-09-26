@@ -84,8 +84,12 @@ class MainViewImpl @Inject constructor(context: Context,
     }
 
     override fun getListPosition(): Int {
-        return (adapter.currentList?.positionOffset ?: 0) +
-                (movies_rv.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+        val offset = adapter.currentList?.positionOffset ?: 0
+        var position = (movies_rv.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+        if (position < 0)
+            position = 0
+        return offset + position
+
     }
 
     override fun setPagedListLiveData(pagedList: LiveData<PagedList<Movie>>) {
