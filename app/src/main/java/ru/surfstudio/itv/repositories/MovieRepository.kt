@@ -70,23 +70,26 @@ class MovieRepository @Inject constructor(private val service: MovieService,
                 return Error(result.message()) // todo first we must try get error message from result.errorBody()
             }
         }
-        return if (startPosition > dataContainer.size) {
-            if (dataContainer.size <= loadSize)
-                Success(ArrayList(dataContainer.subList(0, dataContainer.size)), 0)
-            else {
-                Success(ArrayList(dataContainer.subList(dataContainer.size - loadSize, loadSize)),
-                        dataContainer.size - loadSize)
-            }
-        } else if (startPosition == dataContainer.size && startPosition % Constants.LOAD_SIZE != 0) {
-            Success(emptyList(), startPosition)
-        } else if (startPosition + loadSize >= dataContainer.size) {
-            Success(ArrayList(dataContainer.subList(startPosition, dataContainer.size)), startPosition)
-        } else {
-            Success(ArrayList(dataContainer.subList(startPosition, startPosition + loadSize)), startPosition)
-        }
+        val start = calculateStartPosition(startPosition, loadSize, dataContainer)
+        val end = calculateEndPosition(startPosition, loadSize, dataContainer)
+        return Success(ArrayList(dataContainer.subList(start, end)), start)
     }
 
     private fun calculatePage(containerSize: Int): Int {
         return (containerSize / Constants.LOAD_SIZE) + (containerSize % Constants.LOAD_SIZE > 0).toInt() + 1
+    }
+
+    private fun calculateEndPosition(startPosition: Int, loadSize: Int, dataContainer: MutableList<Movie>): Int {
+        return if (startPosition > dataContainer.size || startPosition + loadSize > dataContainer.size)
+            dataContainer.size
+        else startPosition + loadSize
+    }
+
+    private fun calculateStartPosition(startPosition: Int, loadSize: Int, dataContainer: MutableList<Movie>): Int {
+        return if(startPosition > dataContainer.size && loadSize > dataContainer.size)
+            0
+        else if(startPosition > dataContainer.size)
+            dataContainer.size - loadSize
+        else startPosition
     }
 }
