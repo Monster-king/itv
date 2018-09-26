@@ -1,5 +1,7 @@
 # itv
 Demo application using api https://developers.themoviedb.org
+
+
 ###Screenshots:
 
 <div float="left">
@@ -13,7 +15,8 @@ Demo application using api https://developers.themoviedb.org
 </kbd>
 </div>
 
-Used libraries:
+
+###Used libraries:
 - [RxJava2](https://github.com/ReactiveX/RxJava)
 - [PagingLibrary](https://developer.android.com/topic/libraries/architecture/paging/)
 - [Retrofit2](https://github.com/square/retrofit)
