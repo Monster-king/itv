@@ -1,26 +1,27 @@
 package ru.surfstudio.itv.repositories
 
+import android.util.Log
 import retrofit2.Response
 import ru.surfstudio.itv.data.cache.MovieCache
 import ru.surfstudio.itv.data.model.Movie
 import ru.surfstudio.itv.network.*
 import ru.surfstudio.itv.network.pojo.BaseResponse
+import ru.surfstudio.itv.utils.Constants
+import ru.surfstudio.itv.utils.toInt
 import java.io.IOException
-import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * todo чтобы поддерживать поворот экрана (не потерять позицию скролла) мы должны использовать
- * PositionalDataSource и соответственно изменит MovieRepository
- */
 @Singleton
 class MovieRepository @Inject constructor(private val service: MovieService,
                                           private val cache: MovieCache) {
+    init {
+        Log.i("created", "Repository")
+    }
 
-    private val movies: MutableMap<Int, List<Movie>> = HashMap()
-    private var searchKey = "" // last searched query
-    private val searchedMovies: MutableMap<Int, List<Movie>> = HashMap()
+    private val movies: MutableList<Movie> = ArrayList()
+    private var searchQuery = "" // last searched query
+    private val searchedMovies: MutableList<Movie> = ArrayList()
 
     @Synchronized
     fun refresh() {
@@ -29,48 +30,63 @@ class MovieRepository @Inject constructor(private val service: MovieService,
     }
 
     @Synchronized
-    fun getMovies(page: Int = 1): MovieRepoResult {
-        if (page !in movies.keys) {
-            val result: Response<BaseResponse<Movie>>
-            try {
-                result = service.discoverMovies(page).execute()
-            } catch (e: IOException) {
-                return NoInternet
+    fun getMovies(startPosition: Int, loadSize: Int, searchQuery: String): MovieRepoResult {
+        val start: Int
+        if (searchQuery != this.searchQuery) {
+            searchedMovies.clear()
+            this.searchQuery = searchQuery
+            start = 0
+        } else {
+            start = startPosition
+        }
+        return if (searchQuery == "")
+            loadData(start, loadSize, movies) {
+                service.discoverMovies(calculatePage(movies.size)).execute()
             }
-            if (result.isSuccessful) {
-                movies[page] = result.body()?.results ?: emptyList()
-                movies[page]?.forEach {
-                    it.isFavourite = cache.isSavedMovie(it)
-                }
-            } else {
-                return Error(result.message()) // todo first we must try get error message from result.errorBody()
+        else {
+            loadData(start, loadSize, searchedMovies) {
+                service.searchMovies(searchQuery, calculatePage(searchedMovies.size)).execute()
             }
         }
-        return Success(movies[page] ?: emptyList())
     }
 
-    @Synchronized
-    fun searchMovies(query: String, page: Int = 1): MovieRepoResult {
-        if (query != searchKey) {
-            searchedMovies.clear()
-            searchKey = query
-        }
-        if (page !in searchedMovies.keys) {
+    private fun loadData(startPosition: Int,
+                         loadSize: Int,
+                         dataContainer: MutableList<Movie>,
+                         loadSource: () -> Response<BaseResponse<Movie>>): MovieRepoResult {
+        if (startPosition >= dataContainer.size) {
             val result: Response<BaseResponse<Movie>>
             try {
-                result = service.searchMovies(query, page).execute()
+                result = loadSource.invoke()
             } catch (e: IOException) {
                 return NoInternet
             }
             if (result.isSuccessful) {
-                searchedMovies[page] = result.body()?.results ?: emptyList()
-                searchedMovies[page]?.forEach {
+                result.body()?.results?.forEach {
                     it.isFavourite = cache.isSavedMovie(it)
                 }
+                dataContainer.addAll(result.body()?.results ?: emptyList())
             } else {
                 return Error(result.message()) // todo first we must try get error message from result.errorBody()
             }
         }
-        return Success(searchedMovies[page] ?: emptyList())
+        return if (startPosition > dataContainer.size) {
+            if (dataContainer.size <= loadSize)
+                Success(ArrayList(dataContainer.subList(0, dataContainer.size)), 0)
+            else {
+                Success(ArrayList(dataContainer.subList(dataContainer.size - loadSize, loadSize)),
+                        dataContainer.size - loadSize)
+            }
+        } else if (startPosition == dataContainer.size && startPosition % Constants.LOAD_SIZE != 0) {
+            Success(emptyList(), startPosition)
+        } else if (startPosition + loadSize >= dataContainer.size) {
+            Success(ArrayList(dataContainer.subList(startPosition, dataContainer.size)), startPosition)
+        } else {
+            Success(ArrayList(dataContainer.subList(startPosition, startPosition + loadSize)), startPosition)
+        }
+    }
+
+    private fun calculatePage(containerSize: Int): Int {
+        return (containerSize / Constants.LOAD_SIZE) + (containerSize % Constants.LOAD_SIZE > 0).toInt() + 1
     }
 }

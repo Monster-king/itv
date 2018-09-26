@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="@dimen/margin_top_between_icon"
             android:layout_marginEnd="8dp"
             android:fontFamily="sans-serif"
             android:gravity="center_horizontal"

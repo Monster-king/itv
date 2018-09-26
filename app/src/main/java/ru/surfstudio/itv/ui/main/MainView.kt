@@ -1,5 +1,7 @@
 package ru.surfstudio.itv.ui.main
 
+import android.arch.lifecycle.LiveData
+import android.arch.paging.PagedList
 import android.view.View
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -23,4 +25,12 @@ interface MainView : BaseViewInterface<View> {
     fun showSnackBar()
 
     fun showLoading()
+
+    fun getListPosition(): Int
+
+    fun setPagedListLiveData(pagedList: LiveData<PagedList<Movie>>)
+
+    fun getSearchQuery(): String
+
+    fun showEmptyDataView(searchQuery: String)
 }

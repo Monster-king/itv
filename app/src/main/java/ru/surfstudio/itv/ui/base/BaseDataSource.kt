@@ -1,9 +1,9 @@
 package ru.surfstudio.itv.ui.base
 
-import android.arch.paging.PageKeyedDataSource
+import android.arch.paging.PositionalDataSource
 import java.util.concurrent.Executor
 
-abstract class BaseDataSource<Key, Value>(private val retryExecutor: Executor) : PageKeyedDataSource<Key, Value>() {
+abstract class BaseDataSource<Value>(private val retryExecutor: Executor) : PositionalDataSource<Value>() {
 
     protected var retry: (() -> Any)? = null
 

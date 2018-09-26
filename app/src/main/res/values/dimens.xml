@@ -2,5 +2,6 @@
 <resources>
     <dimen name="toolbar_height">60dp</dimen>
     <dimen name="half_search_height">24dp</dimen>
+    <dimen name="margin_top_between_icon">34dp</dimen>
     <integer name="span_count">1</integer>
 </resources>

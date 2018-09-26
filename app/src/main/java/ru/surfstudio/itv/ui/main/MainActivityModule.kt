@@ -6,6 +6,7 @@ import android.view.View
 import dagger.Binds
 import dagger.Module
 import ru.surfstudio.itv.di.scopes.ActivityScope
+import ru.surfstudio.itv.ui.adapters.MovieAdapter
 import ru.surfstudio.itv.ui.base.BasePresenter
 import ru.surfstudio.itv.ui.base.BaseViewInterface
 import ru.surfstudio.itv.ui.main.presenter.MainPresenter
@@ -32,6 +33,6 @@ abstract class MainActivityModule {
 
     @ActivityScope
     @Binds
-    abstract fun bindView(mainView: MainView): BaseViewInterface<View>
+    abstract fun bindView(mainView: MainViewImpl): BaseViewInterface<View>
 
 }

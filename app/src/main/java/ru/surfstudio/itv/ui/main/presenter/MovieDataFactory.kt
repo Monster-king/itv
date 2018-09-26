@@ -1,6 +1,7 @@
 package ru.surfstudio.itv.ui.main.presenter
 
 import android.arch.paging.DataSource
+import android.util.Log
 import io.reactivex.subjects.BehaviorSubject
 import ru.surfstudio.itv.di.scopes.ActivityScope
 import ru.surfstudio.itv.data.model.Movie
@@ -19,21 +20,19 @@ class MovieDataFactory @Inject constructor(
         private val fetchExecutor: Executor
 ) : DataSource.Factory<Int, Movie>() {
 
-    val dataSourceSubject: BehaviorSubject<BaseMovieDataSource> = BehaviorSubject.create()
     private var searchQuery = ""
+    var dataSource: MovieDataSource? = null
 
     fun setSearchQuery(searchQuery: String) {
+        if (searchQuery == this.searchQuery) return
         this.searchQuery = searchQuery
+        dataSource?.invalidate()
     }
 
     override fun create(): DataSource<Int, Movie> {
-        val dataSource = if (searchQuery == "")
-            MovieDataSource(repository, fetchExecutor, initialLoad, networkState)
-        else
-            SearchMovieDataSource(repository, fetchExecutor, initialLoad, networkState, searchQuery)
-        dataSourceSubject.onNext(dataSource)
-        return dataSource
+        dataSource =
+                MovieDataSource(repository, fetchExecutor, initialLoad, networkState, searchQuery)
+        return dataSource!!
     }
-
 
 }

@@ -1,20 +1,21 @@
 package ru.surfstudio.itv.ui.main
 
 import android.animation.ObjectAnimator
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
+import android.arch.paging.PagedList
 import android.content.Context
 import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.View
-import android.view.animation.LinearInterpolator
-import android.widget.Toast
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.empty_result_layout.view.*
 import kotlinx.android.synthetic.main.error_layout.view.*
 import ru.surfstudio.itv.R
 import ru.surfstudio.itv.di.scopes.ActivityScope
@@ -27,6 +28,7 @@ import javax.inject.Inject
 
 @ActivityScope
 class MainViewImpl @Inject constructor(context: Context,
+                                       private val lifecycleOwner: LifecycleOwner,
                                        private val adapter: MovieAdapter) : BaseView(context), MainView {
 
     override val view: View = this
@@ -62,11 +64,11 @@ class MainViewImpl @Inject constructor(context: Context,
     }
 
     override fun showData() {
-        updateViews(VISIBLE, GONE, GONE)
+        updateViews(content = VISIBLE)
     }
 
     override fun showError() {
-        updateViews(GONE, GONE, VISIBLE)
+        updateViews(error = VISIBLE)
     }
 
     override fun showSnackBar() {
@@ -81,15 +83,37 @@ class MainViewImpl @Inject constructor(context: Context,
         }
     }
 
-    private fun updateViews(content: Int, initialProgress: Int, error: Int, progress: Int = GONE) {
+    override fun getListPosition(): Int {
+        return (adapter.currentList?.positionOffset ?: 0) +
+                (movies_rv.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+    }
+
+    override fun setPagedListLiveData(pagedList: LiveData<PagedList<Movie>>) {
+        pagedList.observe(lifecycleOwner, Observer<PagedList<Movie>> { movies ->
+            adapter.submitList(movies)
+        })
+    }
+
+    override fun getSearchQuery(): String {
+        return search_tv.text.toString()
+    }
+
+    override fun showEmptyDataView(searchQuery: String) {
+        empty_message_tv.text = String.format(resources.getString(R.string.not_found_text), searchQuery)
+        updateViews(empty = VISIBLE)
+    }
+
+    private fun showInitialLoading() {
+        updateViews(initialProgress = VISIBLE)
+    }
+
+    private fun updateViews(content: Int = GONE, initialProgress: Int = GONE, error: Int = GONE,
+                            progress: Int = GONE, empty: Int = GONE) {
         swipe_refresh.visibility = content
         initial_progress.visibility = initialProgress
         error_layout.visibility = error
         progress_bar.visibility = progress
-    }
-
-    private fun showInitialLoading() {
-        updateViews(GONE, VISIBLE, GONE)
+        empty_result_layout.visibility = empty
     }
 
     private fun showLoadingHasData() {

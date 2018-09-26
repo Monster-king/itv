@@ -11,4 +11,6 @@ object Constants {
     const val LANGUAGE = "ru-RU" // todo get from settings (shared pref)
     const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 
+    const val LOAD_SIZE = 20
+
 }

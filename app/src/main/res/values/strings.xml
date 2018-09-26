@@ -11,5 +11,6 @@
 
     <string name="unable_load">Нам не удалось обработать\nваш запрос. Попробуйте еще раз</string>
     <string name="error_text">Проверьте соединение с интернетом и попробуйте еще раз</string>
+    <string name="not_found_text">По запросу “%1$s”\nничего не найдено</string>
 
 </resources>

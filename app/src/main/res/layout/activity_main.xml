@@ -79,10 +79,18 @@
 
     <include
         layout="@layout/error_layout"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_container" />
+        app:layout_constraintTop_toBottomOf="@id/search_container"
+        tools:visibility="gone" />
+
+    <include
+        layout="@layout/empty_result_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_container"
+        tools:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>
